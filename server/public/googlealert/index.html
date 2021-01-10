@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <meta http-equiv="Content-Security-Policy" content="default-src * data: gap: https://ssl.gstatic.com 'unsafe-eval' 'unsafe-inline'; style-src * 'unsafe-inline'; media-src *; img-src * data: content: blob:;">
+  <meta name="format-detection" content="telephone=no">
+  <meta name="msapplication-tap-highlight" content="no">
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width">
+
+  <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+  <script src="https://code.jquery.com/jquery-1.12.4.min.js" integrity="sha384-nvAa0+6Qg9clwYCGGPpDQLVpLNn0fRaROjHqs13t4Ggj3Ez50XnGQqc/r8MhnRDZ" crossorigin="anonymous"></script>
+  <!-- Latest compiled and minified CSS -->
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css" integrity="sha384-HSMxcRTRxnN+Bdg0JdbxYKrThecOKuH5zCYotlSAcp1+c8xmyTe9GYg1l9a69psu" crossorigin="anonymous">
+  <!-- Optional theme -->
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap-theme.min.css" integrity="sha384-6pzBo3FDv/PJ8r2KRkGHifhEocL+1X2rVCTTkUfGk7/0pbek5mMa1upzvWbrUbOZ" crossorigin="anonymous">
+  <!-- Latest compiled and minified JavaScript -->
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js" integrity="sha384-aJ21OjlMXNL5UyIl/XNwTMqvzeRMZH2w8c5cRVpzpU8Y5bApTppSuUkhZXN0VxHd" crossorigin="anonymous"></script>
+
+  <link rel="stylesheet" href="css/start.css">
+  <script src="js/methods_bootstrap.js"></script>
+  <script src="js/components_bootstrap.js"></script>
+  <script src="js/vue_utils.js"></script>
+
+  <script src="dist/js/vconsole.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+
+  <script src="https://cdn.jsdelivr.net/npm/js-cookie@2/src/js.cookie.min.js"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
+
+  <title>Google Alert</title>
+</head>
+<body>
+    <div id="top" class="container">
+        <button class="btn btn-default pull-right" v-on:click="list_update">更新</button>
+        <h1>Google Alert</h1>
+        <br>
+
+        <h2>本日のアイテム</h2>
+        <div class="panel panel-default" v-for="(value, index) in item_list_today">
+          <div class="panel-heading"><h3>{{value.content.title}}</h3></div>
+          <div class="panel-body">
+            <span class="pull-left">pubDate: {{new Date(value.pubDate).toLocaleString()}}</span>
+            <span class="pull-right">keyword: {{value.keyword}}</span>
+            <br><br>
+            {{value.content.contentSnippet}}
+          </div>
+          <div class="panel-footer text-right">
+            <a class="pull-left" v-bind:href="value.content.link">ブラウザで開く</a>
+            いいね数:{{value.likes}}
+            <button class="btn btn-default btn-sm" v-on:click="change_likes(value, true)">↑</button><button class="btn btn-default btn-sm" v-on:click="change_likes(value, false)">↓</button>
+          </div>
+        </div>
+        
+        <hr>
+        <h2>過去のアイテム</h2>
+        <div class="form-inline">
+          <button class="btn btn-default" v-on:click="list_update_default">今月</button>
+          <select class="form-control" v-model.number="target_year" v-on:change="list_update">
+            <option v-for="(value, index) in target_year_list" v-bind:value="value">{{value}}年</option>
+          </select>
+          <select class="form-control" v-model.number="target_month" v-on:change="list_update">
+            <option value="0">通年</option>
+            <option v-for="(value, index) in [1,2,3,4,5,6,7,8,9,10,11,12]" v-bind:value="value">{{value}}月</option>
+          </select>
+          <select class="form-control" v-model.number="has_likes">
+            <option value="1">いいね有のみ</option>
+            <option value="0">すべて</option>
+          </select>
+        </div>
+
+        <table class="table table-striped">
+          <thead>
+            <tr><th>keyworkd</th><th>title</th><th>pubDate</th><th>いいね</th></tr>
+          </thead>
+          <tbody>
+              <tr v-for="(value, index) in item_list" v-if="has_likes==0||value.likes>0">
+                  <td>{{value.keyword}}</td>
+                  <td><a v-bind:href="value.content.link">{{value.content.title}}</a></td>
+                  <td>{{new Date(value.pubDate).toLocaleString()}}</td>
+                  <td>{{value.likes}}
+                    <button class="btn btn-default btn-xs" v-on:click="change_likes(value, true)">↑</button><button class="btn btn-default btn-xs" v-on:click="change_likes(value, false)">↓</button>
+                  </td>
+                </tr>
+          </tbody>
+        </table>
+
+
+        <!-- for progress-dialog -->
+        <progress-dialog v-bind:title="progress_title"></progress-dialog>
+    </div>
+
+    <script src="js/start.js"></script>
+</body>
