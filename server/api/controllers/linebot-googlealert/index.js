@@ -91,13 +91,13 @@ exports.handler = async (event, context, callback) => {
     }else
     if( body.year && body.month == 0 ){
       var thisYear = new Date();
-      thisMonth.setFullYear(body.year);
-      thisMonth.setMonth(0);
-      thisMonth.setDate(1);
-      thisMonth.setHours(0, 0, 0, 0);
+      thisYear.setFullYear(body.year);
+      thisYear.setMonth(0);
+      thisYear.setDate(1);
+      thisYear.setHours(0, 0, 0, 0);
       startTime = thisYear.getTime();
       var nextYear = new Date(thisYear);
-      nextMonth.setFullYear(thisYear.getFullYear() + 1);
+      nextYear.setFullYear(thisYear.getFullYear() + 1);
       endTime = nextYear.getTime();
     }else{
       var thisMonth = new Date();
