@@ -107,7 +107,7 @@ exports.handler = async (event, context, callback) => {
       thisMonth.setHours(0, 0, 0, 0);
       startTime = thisMonth.getTime();
       var nextMonth = new Date(thisMonth);
-      nextMonth.setMonth(thisMonth.getMonth() + 1);
+      nextYear.setMonth(thisMonth.getMonth() + 1);
       endTime = nextMonth.getTime();
     }
 
