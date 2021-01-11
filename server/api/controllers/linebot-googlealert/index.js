@@ -81,7 +81,7 @@ exports.handler = async (event, context, callback) => {
 
     var startTime;
     var endTime;
-    if( !body.year || !body.month ){
+    if( !body.year ){
       var today = new Date();
       today.setHours(0, 0, 0, 0);
       startTime = today.getTime();
@@ -89,7 +89,7 @@ exports.handler = async (event, context, callback) => {
       tomorrow.setDate(today.getDate() + 1);
       endTime = tomorrow.getTime();
     }else
-    if( body.year && body.month == 0 ){
+    if( body.year && !body.month ){
       var thisYear = new Date();
       thisYear.setFullYear(body.year);
       thisYear.setMonth(0);
