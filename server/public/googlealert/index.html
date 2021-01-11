@@ -49,7 +49,8 @@
           <div class="panel-footer text-right">
             <a class="pull-left" v-bind:href="value.content.link">ブラウザで開く</a>
             いいね数:{{value.likes}}
-            <button class="btn btn-default btn-sm" v-on:click="change_likes(value, true)">↑</button><button class="btn btn-default btn-sm" v-on:click="change_likes(value, false)">↓</button>
+            <button class="btn btn-default btn-sm" v-on:click="change_likes(value, true)"><span class="glyphicon glyphicon glyphicon-thumbs-up"></span></button>
+            <button class="btn btn-default btn-sm" v-on:click="change_likes(value, false)"><span class="glyphicon glyphicon glyphicon-thumbs-down"></span></button>
           </div>
         </div>
         
@@ -80,7 +81,8 @@
                   <td><a v-bind:href="value.content.link">{{value.content.title}}</a></td>
                   <td>{{new Date(value.pubDate).toLocaleString()}}</td>
                   <td>{{value.likes}}
-                    <button class="btn btn-default btn-xs" v-on:click="change_likes(value, true)">↑</button><button class="btn btn-default btn-xs" v-on:click="change_likes(value, false)">↓</button>
+                    <button class="btn btn-default btn-xs" v-on:click="change_likes(value, true)"><span class="glyphicon glyphicon glyphicon-thumbs-up"></span></button>
+                    <button class="btn btn-default btn-xs" v-on:click="change_likes(value, false)"><span class="glyphicon glyphicon glyphicon-thumbs-down"></span></button>
                   </td>
                 </tr>
           </tbody>
