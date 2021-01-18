@@ -71,6 +71,7 @@ exports.handler = async (event, context, callback) => {
         pubDate: new Date(body.pubDate).getTime(),
         crated_at: body.created_at
       };
+      var sql_insert = 'INSERT INTO items SET ?';
       await dbconn.query(sql_insert, values);
     
       var sql_select = `SELECT memberId FROM members`;
