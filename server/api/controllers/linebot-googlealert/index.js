@@ -62,8 +62,16 @@ exports.handler = async (event, context, callback) => {
 
     var index = rows.findIndex(rows_item => body.id == rows_item.id );
     if( index < 0 ){
-      var sql_insert = `INSERT INTO items (id, keyword, content, pubDate, created_at) VALUES ('${body.id}', '${body.keyword}', '${JSON.stringify(body)}', '${new Date(body.pubDate).getTime()}', ${body.created_at})`;
-      await dbconn.query(sql_insert);
+//      var sql_insert = `INSERT INTO items (id, keyword, content, pubDate, created_at) VALUES ('${body.id}', '${body.keyword}', '${JSON.stringify(body)}', '${new Date(body.pubDate).getTime()}', ${body.created_at})`;
+//      await dbconn.query(sql_insert);
+      var values = {
+        id: body.id, 
+        keyword: body.keyword,
+        content: JSON.stringify(body),
+        pubDate: new Date(body.pubDate).getTime(),
+        crated_at: body.created_at
+      };
+      await dbconn.query(sql_insert, values);
     
       var sql_select = `SELECT memberId FROM members`;
       const [rows] = await dbconn.query(sql_select);
