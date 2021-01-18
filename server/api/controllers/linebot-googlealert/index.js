@@ -69,7 +69,7 @@ exports.handler = async (event, context, callback) => {
         keyword: body.keyword,
         content: JSON.stringify(body),
         pubDate: new Date(body.pubDate).getTime(),
-        crated_at: body.created_at
+        created_at: body.created_at
       };
       var sql_insert = 'INSERT INTO items SET ?';
       await dbconn.query(sql_insert, values);
